@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="An interactive journey through our Solar System.">
+  <title>Celestia | Explore Our Solar System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="loader" id="loader" aria-label="Loading Celestia"><div class="loader-orbit"><span></span></div><p>CHARTING THE COSMOS</p></div>
+  <div class="space" id="space" aria-hidden="true"><canvas id="starCanvas"></canvas><div class="nebula nebula-a"></div><div class="nebula nebula-b"></div><div class="shooting-stars" id="shootingStars"></div><div class="cursor-glow" id="cursorGlow"></div></div>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="Celestia home"><span class="brand-mark">✦</span> CELESTIA</a>
+    <nav aria-label="Main navigation"><a href="#system">Solar System</a><a href="#timeline">Cosmic Timeline</a><button id="modeToggle" aria-pressed="false">Color mode</button><button id="soundToggle" aria-pressed="false">Sound off</button></nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <p class="eyebrow">A COSMIC FIELD GUIDE</p>
+      <h1>Explore Our<br><em>Solar System</em></h1>
+      <p class="hero-copy">Step into a living map of our celestial neighborhood. Follow each world in its orbit, uncover its secrets, and see the solar system in motion.</p>
+      <a href="#system" class="explore-button">Start Exploring <span>↓</span></a>
+      <a href="#system" class="scroll-cue" aria-label="Scroll to explore"><i></i><span>SCROLL TO ORBIT</span></a>
+    </section>
+
+    <section class="system-section" id="system" aria-labelledby="system-title">
+      <div class="section-heading"><p class="eyebrow">OUR CELESTIAL NEIGHBORHOOD</p><h2 id="system-title">The <em>Sun</em> &amp; its worlds</h2><p>Tap a planet or its orbital label to begin your journey.</p></div>
+      <div class="system-card" id="systemCard">
+        <div class="view-controls" aria-label="Solar system controls">
+          <button id="zoomIn" aria-label="Zoom in">+</button><button id="zoomOut" aria-label="Zoom out">−</button><button id="resetView" aria-label="Reset solar system view">↺</button>
+        </div>
+        <div class="advanced-controls"><button id="compareOpen">Compare planets</button><button id="tourToggle">Start auto tour</button></div>
+        <div class="solar-system" id="solarSystem" aria-label="Interactive solar system"></div>
+        <div class="tour-caption" id="tourCaption" aria-live="polite"></div>
+        <div class="system-hint">DRAG TO EXPLORE · CLICK A WORLD</div>
+      </div>
+    </section>
+
+    <section class="timeline-section" id="timeline" aria-labelledby="timeline-title">
+      <div><p class="eyebrow">COSMIC CONTEXT</p><h2 id="timeline-title">A story written in <em>starlight.</em></h2><p class="timeline-intro">Our solar system is an evolving archive of the universe. Its worlds preserve evidence from its very first days.</p></div>
+      <div class="timeline-panel">
+        <article><span>01</span><div><h3>Formation</h3><p>4.6 billion years ago, a cloud of gas and dust collapsed under gravity, igniting our Sun and forming a spinning protoplanetary disk.</p></div></article>
+        <article><span>02</span><div><h3>Planet families</h3><p>Four rocky terrestrial planets orbit close to the Sun; beyond them, giant gas and ice worlds hold most of the system's mass.</p></div></article>
+        <article><span>03</span><div><h3>Asteroid Belt</h3><p>Between Mars and Jupiter lies a broad band of ancient rocky debris—material that never became a planet.</p></div></article>
+        <article><span>04</span><div><h3>Kuiper Belt</h3><p>Past Neptune, an icy frontier surrounds the solar system, home to dwarf planets, comets, and primordial remnants.</p></div></article>
+      </div>
+    </section>
+
+    <section class="contribute-section" id="contribute" aria-labelledby="contribute-title">
+      <div class="contribute-copy"><p class="eyebrow">OPEN SOURCE MISSION</p><h2 id="contribute-title">Help map the <em>cosmos.</em></h2><p>Celestia grows through curious minds. Whether you design, write, test, or code, your contribution can help more people discover the solar system.</p><button class="contributor-button" id="contributorButton">Become a contributor <span>↗</span></button></div>
+      <div class="contributor-card" id="contributorCard" hidden aria-live="polite">
+        <button class="contributor-close" id="contributorClose" aria-label="Close contributor details">×</button><p class="eyebrow">YOUR LAUNCH SEQUENCE</p><h3>Find your orbit</h3>
+        <div class="contribution-paths"><div><b>01</b><span><strong>Explore</strong>Try the experience and flag opportunities to improve it.</span></div><div><b>02</b><span><strong>Create</strong>Enhance visuals, accessibility, astronomy content, or interactions.</span></div><div><b>03</b><span><strong>Share</strong>Submit your work through your project’s preferred contribution channel.</span></div></div>
+        <button class="copy-command" id="copyCommand" data-command="git clone &lt;your-project-repository-url&gt;">Copy starter command</button><small id="copyStatus">Replace the repository URL with your project URL.</small>
+      </div>
+    </section>
+  </main>
+  <footer>CELESTIA <span>·</span> A WINDOW INTO THE COSMOS</footer>
+
+  <div class="planet-modal" id="planetModal" role="dialog" aria-modal="true" aria-labelledby="modalName" hidden>
+    <div class="modal-backdrop" data-close-modal></div>
+    <article class="modal-card">
+      <button class="modal-close" data-close-modal aria-label="Close planet details">×</button>
+      <div class="modal-visual"><div class="modal-planet" id="modalPlanet"></div><p id="modalTagline"></p></div>
+      <div class="modal-content"><p class="eyebrow" id="modalType"></p><h2 id="modalName"></h2><p class="modal-description" id="modalDescription"></p><h3>Quick facts</h3><dl class="facts" id="facts"></dl><div class="fact-highlight"><span>✦ FUN FACT</span><p id="modalFunFact"></p></div><h3>Interesting facts</h3><ul id="interestingFacts"></ul></div>
+    </article>
+  </div>
+  <aside class="compare-panel" id="comparePanel" aria-labelledby="compareTitle" hidden><div class="compare-head"><div><p class="eyebrow">SIDE BY SIDE</p><h2 id="compareTitle">Compare worlds</h2></div><button id="compareClose" aria-label="Close comparison">×</button></div><p>Select two planets to compare their planetary profiles.</p><div class="compare-selects"><label>World one<select id="compareA"></select></label><label>World two<select id="compareB"></select></label></div><div class="comparison" id="comparison"></div></aside>
+  <script src="script.js"></script>
+</body>
+</html>
